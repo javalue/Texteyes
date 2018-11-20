@@ -1,5 +1,6 @@
 package com.text.eyes;
 
+import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentUris;
@@ -9,10 +10,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mImgThumb = findViewById(R.id.img_thumb);
         mBtnGallery.setOnClickListener(this);
         mBtnCopy.setOnClickListener(this);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission
+                .READ_EXTERNAL_STORAGE}, 101);
     }
 
     @Override
@@ -73,6 +78,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void handleImageOnKitKat(Intent data) {
